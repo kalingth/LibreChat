@@ -1014,7 +1014,7 @@ ${convo}
 
     if (this.streamHandler.reasoningTokens.length > 0) {
       reasoningText = this.streamHandler.reasoningTokens.join('');
-      thinkMatch = reasoningText.match(/<think>([\s\S]*?)<\/think>/)?.[1]?.trim();
+      thinkMatch = reasoningText.match(/^(?:<think>|<reasoning>)([\s\S]*?)(?:<\/think>|<\/reasoning>)/)?.[1]?.trim();
       if (thinkMatch != null && thinkMatch) {
         const reasoningTokens = `:::thinking\n${thinkMatch}\n:::\n`;
         remainingText = reasoningText.split(/<\/think>/)?.[1]?.trim() || '';
