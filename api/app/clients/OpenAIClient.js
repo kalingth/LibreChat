@@ -1017,17 +1017,17 @@ ${convo}
       thinkMatch = reasoningText.match(/^(?:<think>|<reasoning>)([\s\S]*?)(?:<\/think>|<\/reasoning>)/)?.[1]?.trim();
       if (thinkMatch != null && thinkMatch) {
         const reasoningTokens = `:::thinking\n${thinkMatch}\n:::\n`;
-        remainingText = reasoningText.split(/<\/think>/)?.[1]?.trim() || '';
+        remainingText = reasoningText.split(/<\/(?:think|reasoning)>/)?.[1]?.trim() || '';
         return `${reasoningTokens}${remainingText}${this.streamHandler.tokens.join('')}`;
       } else if (thinkMatch === '') {
-        remainingText = reasoningText.split(/<\/think>/)?.[1]?.trim() || '';
+        remainingText = reasoningText.split(/<\/(?:think|reasoning)>/)?.[1]?.trim() || '';
         return `${remainingText}${this.streamHandler.tokens.join('')}`;
       }
     }
 
     const reasoningTokens =
       reasoningText.length > 0
-        ? `:::thinking\n${reasoningText.replace('<think>', '').replace('</think>', '').trim()}\n:::\n`
+        ? `:::thinking\n${reasoningText.replace(/<(?:think|reasoning)>/, '').replace(/<\/(?:think|reasoning)>/, '').trim()}\n:::\n`
         : '';
 
     return `${reasoningTokens}${this.streamHandler.tokens.join('')}`;
